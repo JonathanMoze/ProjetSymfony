@@ -17,4 +17,25 @@ class SiteController extends AbstractController
             'controller_name' => 'SiteController',
         ]);
     }
+    
+    /**
+     * @Route("/", name="home")
+     */
+    public function home() {
+        return $this->render('site/home.html.twig');
+    }
+
+    /**
+     * @Route("/apropos", name="apropos")
+     */
+    public function apropos() {
+        return $this->render('site/apropos.html.twig');
+    }
+
+    /**
+     * @Route("/series", name="series")
+     */
+    public function series() {
+        return $this->render('site/series.html.twig');
+    }
 }
