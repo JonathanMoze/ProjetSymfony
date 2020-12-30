@@ -2,21 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Series;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SiteController extends AbstractController
 {
-    /**
-     * @Route("/site", name="site")
-     */
-    public function index(): Response
-    {
-        return $this->render('site/index.html.twig', [
-            'controller_name' => 'SiteController',
-        ]);
-    }
     
     /**
      * @Route("/", name="home")
@@ -36,6 +28,31 @@ class SiteController extends AbstractController
      * @Route("/series", name="series")
      */
     public function series() {
-        return $this->render('site/series.html.twig');
+
+        $series = $this->getDoctrine()
+        ->getRepository(Series::class)
+        ->findBy(
+            array(),
+            array('title' => 'ASC'),
+            10,
+        );
+
+        return $this->render('site/series.html.twig', [
+            'series' => $series,
+        ]);
     }
+
+
+    /**
+     * @Route("/series/{id}", name="poster_get", methods={"GET"})
+     */
+    public function poster(Series $serie) : Response
+    {
+        $poster = stream_get_contents($serie->getPoster());
+        $rep = new Response($poster, 200,[
+            "Content-type" => "image/jpeg",
+        ]); 
+        return $rep;
+    }
+
 }

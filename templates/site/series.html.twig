@@ -5,4 +5,16 @@
 {% block body %}
 <h1>Les séries</h1>
 <hr>
+
+<ul>
+    {% for serie in series %}
+        <li>
+            {{ serie.title }}
+            <br>
+            <img src="{{ path('poster_get', {'id': serie.id}) }}">
+        </li>
+    {% else %}
+        <span>No records found</span>
+    {% endfor %}
+</ul>
 {% endblock %}
