@@ -6,6 +6,8 @@ use App\Entity\Series;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class SiteController extends AbstractController
 {
@@ -41,9 +43,9 @@ class SiteController extends AbstractController
     /**
      * @Route("/series", name="series")
      */
-    public function series() {
+    public function index(Request $requete, PaginatorInterface $paginator) {
 
-        $series = $this->getDoctrine()
+        $donnees = $this->getDoctrine()
         ->getRepository(Series::class)
         ->findBy(
             array(),
@@ -51,7 +53,13 @@ class SiteController extends AbstractController
             10,
         );
 
-        return $this->render('site/series.html.twig', [
+        $series=$paginator->paginate(
+            $donnees,
+            $requete->query->getInt('page',1),
+            10
+        );
+
+        return $this->render('series.html.twig', [
             'series' => $series,
         ]);
     }
