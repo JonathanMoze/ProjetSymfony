@@ -13,6 +13,29 @@ class SeriesController extends AbstractController
 {
 
     /**
+     * @Route("/series", name="series")
+     */
+    public function series(Request $requete, PaginatorInterface $paginator) {
+
+        $donnees = $this->getDoctrine()
+        ->getRepository(Series::class)
+        ->findBy(
+            array(),
+            array('title' => 'ASC'),
+        );
+
+        $series=$paginator->paginate(
+            $donnees,
+            $requete->query->getInt('page',1),
+            10
+        );
+
+        return $this->render('series/series.html.twig', [
+            'series' => $series,
+        ]);
+    }
+
+    /**
      * @Route("/series/{id}", name="poster_get", methods={"GET"})
      */
     public function poster(Series $serie) : Response

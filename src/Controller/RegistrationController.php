@@ -12,6 +12,17 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationController extends AbstractController
 {
+
+    /**
+     * @Route("/inscription", name="inscription")
+     */
+    public function inscription() {
+        return $this->render('registration/inscription.html.twig');
+    }
+
+
+
+
     /**
      * @Route("/register", name="app_register")
      */
