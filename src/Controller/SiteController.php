@@ -63,17 +63,4 @@ class SiteController extends AbstractController
         ]);
     }
 
-
-    /**
-     * @Route("/series/{id}", name="poster_get", methods={"GET"})
-     */
-    public function poster(Series $serie) : Response
-    {
-        $poster = stream_get_contents($serie->getPoster());
-        $rep = new Response($poster, 200,[
-            "Content-type" => "image/jpeg",
-        ]); 
-        return $rep;
-    }
-
 }
