@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+
+{% block nav_series %} active {% endblock %}
+
+
+
+{% block body %}
+
+<h1> Série : {{serie.title}}</h1>
+<hr>
+<br>
+<h3>Les Saisons :</h3>
+
+<ul>
+    {% for saison in saisons %}
+        <li>Saison {{saison.number}}</li>
+    {% else %}
+        <span>No seasons found</span>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

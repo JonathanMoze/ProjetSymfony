@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Series;
+use App\Entity\Season;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,6 +46,25 @@ class SeriesController extends AbstractController
             "Content-type" => "image/jpeg",
         ]); 
         return $rep;
+    }
+
+
+    /**
+     * @Route("/serie/{id}", name="saisons_serie", methods={"GET"})
+     */
+    public function serie(Series $serie)
+    {
+        $saisons = $this->getDoctrine()
+        ->getRepository(Season::class)
+        ->findBy(
+            array('series' => $serie->getId()),
+            array('number' => 'ASC'),
+        );
+
+        return $this->render('series/serie.html.twig', [
+            'serie' => $serie,
+            'saisons' => $saisons,
+        ]);
     }
 
 }
