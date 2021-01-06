@@ -50,7 +50,6 @@ class SiteController extends AbstractController
         ->findBy(
             array(),
             array('title' => 'ASC'),
-            10,
         );
 
         $series=$paginator->paginate(
@@ -59,7 +58,7 @@ class SiteController extends AbstractController
             10
         );
 
-        return $this->render('series.html.twig', [
+        return $this->render('site/series.html.twig', [
             'series' => $series,
         ]);
     }
