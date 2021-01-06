@@ -12,19 +12,22 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="/">La Vidéothèque</a>
+  <a class="navbar-brand" href="{{path('home')}}">La Vidéothèque</a>
   
  
   <div class="navbar-collapse collapse show" id="navbarColor01" style="">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item {% block nav_series %}{% endblock %}">
-        <a class="nav-link" href="/series">Les séries</a>
+        <a class="nav-link" href="{{path('series')}}">Les séries</a>
       </li>
       <li class="nav-item {% block nav_apropos %}{% endblock %}">
-        <a class="nav-link" href="/apropos">A propos</a>
+        <a class="nav-link" href="{{path('apropos')}}">A propos</a>
       </li>
       <li class="nav-item {% block se_connecter %}{% endblock %}">
-        <a class="nav-link" href="/connexion">Se connecter</a>
+        <a class="nav-link" href="{{path('connexion')}}">Se connecter</a>
+      </li>
+      <li class="nav-item {% block s_enregistrer %}{% endblock %}">
+        <a class="nav-link" href="{{path('register')}}">S'enregistrer</a>
       </li>
       
     </ul>
