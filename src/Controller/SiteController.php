@@ -43,7 +43,7 @@ class SiteController extends AbstractController
     /**
      * @Route("/series", name="series")
      */
-    public function index(Request $requete, PaginatorInterface $paginator) {
+    public function series(Request $requete, PaginatorInterface $paginator) {
 
         $donnees = $this->getDoctrine()
         ->getRepository(Series::class)
