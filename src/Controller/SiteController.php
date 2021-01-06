@@ -30,14 +30,14 @@ class SiteController extends AbstractController
      * @Route("/connexion", name="connexion")
      */
     public function connexion() {
-        return $this->render('site/connexion.html.twig');
+        return $this->render('security/connexion.html.twig');
     }
 
     /**
      * @Route("/inscription", name="inscription")
      */
     public function inscription() {
-        return $this->render('site/inscription.html.twig');
+        return $this->render('registration/inscription.html.twig');
     }
 
     /**
@@ -58,7 +58,7 @@ class SiteController extends AbstractController
             10
         );
 
-        return $this->render('site/series.html.twig', [
+        return $this->render('series/series.html.twig', [
             'series' => $series,
         ]);
     }
