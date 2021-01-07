@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+
+{% block nav_series %} active {% endblock %}
+
+
+
+{% block body %}
+
+<h1> Série : {{serie.title}} </h1>
+<hr>
+<br>
+<h2>Saison : {{saisons.number}}</h2>
+<br>
+
+<h3>Les Episodes :</h3>
+<br>
+<ul>
+    {% for episode in episodes %}
+        <li><strong>Episode n° {{episode.number}}  : </strong>{{episode.title}}   <a href="http://www.imbd.com/title/{{episode.imdb}}">Imbd </a> </li>
+    {% else %}
+        <span>No episodes found</span>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

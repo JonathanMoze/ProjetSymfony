@@ -15,7 +15,7 @@ class SeriesController extends AbstractController
 {
 
     /**
-     * @Route("/series", name="series")
+     * @Route("/liste_series", name="series")
      */
     public function series(Request $requete, PaginatorInterface $paginator) {
 
@@ -32,13 +32,13 @@ class SeriesController extends AbstractController
             10
         );
 
-        return $this->render('series/series.html.twig', [
+        return $this->render('series/liste_series.html.twig', [
             'series' => $series,
         ]);
     }
 
     /**
-     * @Route("/series/{id}", name="poster_get", methods={"GET"})
+     * @Route("/liste_series/{id}", name="poster_get", methods={"GET"})
      */
     public function poster(Series $serie) : Response
     {
@@ -69,9 +69,9 @@ class SeriesController extends AbstractController
     }
 
     /**
-     * @Route("/episode/{id}", name="episode_saison", methods={"GET"})
+     * @Route("/saison/{id}", name="episode_saison", methods={"GET"})
      */
-    public function episode(Season $season )
+    public function saison(Season $season )
     {
         $episode = $this->getDoctrine()
         ->getRepository(Episode::class)
@@ -81,7 +81,7 @@ class SeriesController extends AbstractController
         );
         $serie = $season->getSeries();
 
-        return $this->render('series/episode.html.twig', [
+        return $this->render('series/saison.html.twig', [
             'serie' => $serie,
             'saisons' => $season,
             'episodes' => $episode,

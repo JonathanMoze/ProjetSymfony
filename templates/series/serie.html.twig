@@ -16,7 +16,7 @@
 
 <ul>
     {% for saison in saisons %}
-        <li> <a href="{{ path('episode_saison',{'id': saison.id}) }}">Saison {{saison.number}}</a></li>
+        <li> <a href="{{ path('episode_saison',{'id': saison.id}) }}">Saison {{saison.number}}</a></li>  <em>{{serie.imdb}}</em></li>
     {% else %}
         <span>No seasons found</span>
     {% endfor %}
