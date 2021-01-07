@@ -14,7 +14,14 @@
            <h3><a href="{{ path('saisons_serie', {'id': serie.id}) }}">{{ serie.title }} </a></h3>
             <br>
             <img src="{{ path('poster_get', {'id': serie.id}) }}">
+            {% if app.user %}
+            <br>
+            <form action="">
+                <button type="submit" class="btn btn-success">Suivre cette série</button>
+            </form>
+            {% endif %}
         </li>
+        <br>
     {% else %}
         <span>No records found</span>
     {% endfor %}

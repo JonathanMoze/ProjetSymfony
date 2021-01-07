@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Series;
 use App\Entity\Season;
 use App\Entity\Episode;
@@ -38,7 +39,7 @@ class SeriesController extends AbstractController
     }
 
     /**
-     * @Route("/liste_series/{id}", name="poster_get", methods={"GET"})
+     * @Route("/liste_series/{id}", name="poster_get")
      */
     public function poster(Series $serie) : Response
     {
@@ -51,7 +52,7 @@ class SeriesController extends AbstractController
 
 
     /**
-     * @Route("/serie/{id}", name="saisons_serie", methods={"GET"})
+     * @Route("/serie/{id}", name="saisons_serie")
      */
     public function serie(Series $serie)
     {
@@ -69,7 +70,7 @@ class SeriesController extends AbstractController
     }
 
     /**
-     * @Route("/saison/{id}", name="episode_saison", methods={"GET"})
+     * @Route("/saison/{id}", name="episode_saison")
      */
     public function saison(Season $season )
     {
