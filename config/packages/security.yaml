@@ -5,7 +5,8 @@ security:
                 class: App\Entity\User
                 property: email
     encoders:
-        App\Entity\User: 'plaintext'
+        App\Entity\User:
+            algorithm: auto
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
