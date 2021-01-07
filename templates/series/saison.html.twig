@@ -17,7 +17,9 @@
 <br>
 <ul>
     {% for episode in episodes %}
-        <li><strong>Episode n° {{episode.number}}  : </strong>{{episode.title}}   <a href="http://www.imbd.com/title/{{episode.imdb}}">Imbd </a> </li>
+        <li><strong>Episode n° {{episode.number}}  : </strong>{{episode.title}}  
+        <br>
+     <a href="https://www.imdb.com/title/{{episode.imdb}}/">Imbd </a> </li>
     {% else %}
         <span>No episodes found</span>
     {% endfor %}
