@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Series;
 use App\Entity\Season;
+use App\Entity\Episode;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -64,6 +65,26 @@ class SeriesController extends AbstractController
         return $this->render('series/serie.html.twig', [
             'serie' => $serie,
             'saisons' => $saisons,
+        ]);
+    }
+
+    /**
+     * @Route("/episode/{id}", name="episode_saison", methods={"GET"})
+     */
+    public function episode(Season $season )
+    {
+        $episode = $this->getDoctrine()
+        ->getRepository(Episode::class)
+        ->findBy(
+            array('season' => $season->getId()),
+            array('number' => 'ASC'),
+        );
+        $serie = $season->getSeries();
+
+        return $this->render('series/episode.html.twig', [
+            'serie' => $serie,
+            'saisons' => $season,
+            'episodes' => $episode,
         ]);
     }
 

@@ -10,11 +10,13 @@
 <h1> Série : {{serie.title}}</h1>
 <hr>
 <br>
-<h3>Les Saisons :</h3>
+
+
+<h3>Les Saisons de {{serie.title}} :</h3>
 
 <ul>
     {% for saison in saisons %}
-        <li>Saison {{saison.number}}</li>
+        <li> <a href="{{ path('episode_saison',{'id': saison.id}) }}">Saison {{saison.number}}</a></li>
     {% else %}
         <span>No seasons found</span>
     {% endfor %}
