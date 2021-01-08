@@ -65,7 +65,7 @@ class SeriesController extends AbstractController
             array('name' => 'ASC'),
         );
 
-        return $this->render('series/liste_genre.html.twig', [
+        return $this->render('genre/liste_genre.html.twig', [
             'genres' => $genres,
         ]);
     }
@@ -82,7 +82,7 @@ class SeriesController extends AbstractController
             array('name' => 'ASC'),
         );
 
-        return $this->render('series/liste_pays.html.twig', [
+        return $this->render('pays/liste_pays.html.twig', [
             'pays' => $pays,
         ]);
     }
@@ -99,7 +99,7 @@ class SeriesController extends AbstractController
             $requete->query->getInt('page',1),
             10
         );
-        return $this->render('series/pays_serie.html.twig', [
+        return $this->render('pays/pays_serie.html.twig', [
             'pays' => $pays,
             'series' => $series,
         ]);
@@ -116,7 +116,7 @@ class SeriesController extends AbstractController
             $requete->query->getInt('page',1),
             10
         );
-        return $this->render('series/serie_genre.html.twig', [
+        return $this->render('genre/serie_genre.html.twig', [
             'genres' => $genre,
             'series' => $series,
         ]);
