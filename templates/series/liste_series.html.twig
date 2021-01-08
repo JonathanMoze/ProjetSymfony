@@ -18,9 +18,7 @@
             <img src="{{ path('poster_get', {'id': serie.id}) }}">
             {% if app.user %}
             <br>
-            <form action="">
-                <button type="submit" class="btn btn-success">Suivre cette série</button>
-            </form>
+            <a class="btn btn-success" href="{{ path('suivre_serie', {'id': serie.id}) }}" role="button">Suivre cette série</a>
             {% endif %}
         </li>
         <br>
