@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block nav_series %} active {% endblock %}
+{% block nav_messeries %} active {% endblock %}
 
 {% block body %}
-<h1>Les séries</h1>
+<h1>Mes séries</h1>
 <hr>
-{% if app.user%}
-<div> {{knp_pagination_render(series) }}</div>
 
+<br>
+<div> {{knp_pagination_render(series) }}</div>
+<br>
 <ul>
     {% for serie in series %}
         <li>
@@ -15,6 +16,7 @@
             <br>
             <img src="{{ path('poster_get', {'id': serie.id}) }}">
         </li>
+        <br>
     {% else %}
         <span>No records found</span>
     {% endfor %}
@@ -22,7 +24,4 @@
    
 
 </ul>
-
-
-
 {% endblock %}
