@@ -6,19 +6,17 @@
 <h1>Les séries</h1>
 <hr>
 <h4><a class="btn btn-primary" role="button" href="{{path('series')}}">Afficher toutes les series <a></h4>
-<h4><a class="btn btn-primary" role="button" href="{{path('pays')}}">Afficher les series par pays<a></h4>
+<h4><a class="btn btn-primary" role="button" href="{{path('genre')}}">Afficher les series par genre<a></h4>
 
 <br>
 
 
 <ul>
-    {% for genre in genres %}
+    {% for country in pays %}
         <li>
-        <h3><a href="{{ path('genre_serie', {'id': genre.id}) }}">{{ genre.name }} </a></h3>            <br>
+        <h3><a href="{{ path('pays_serie', {'id': country.id}) }}">{{ country.name }} </a></h3>        <br>
         </li>
         <br>
-    {% else %}
-        <span>No records found</span>
     {% endfor %}
    
 </ul>

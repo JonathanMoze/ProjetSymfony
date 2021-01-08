@@ -5,8 +5,8 @@
 {% block body %}
 <h1>Les séries</h1>
 <hr>
-<h4><a href="{{path('genre')}}">Afficher les series par genre<a></h4>
-<h4><a href="">Afficher les series par pays<a></h4>
+<h4><a class="btn btn-primary" role="button"href="{{path('genre')}}">Afficher les series par genre</a></h4>
+<h4><a class="btn btn-primary" role="button"href="{{path('pays')}}">Afficher les series par pays</a></h4>
 
 <div> {{knp_pagination_render(series) }}</div>
 

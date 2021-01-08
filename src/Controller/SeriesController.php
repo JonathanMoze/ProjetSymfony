@@ -7,6 +7,7 @@ use App\Entity\Series;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Entity\Genre;
+use App\Entity\Country;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -69,23 +70,58 @@ class SeriesController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/genre/{id}", name="genre_serie")
+     /**
+     * @Route("/liste_pays", name="pays")
      */
-    public function liste_genre(Genre $genre) {
+    public function liste_pays() {
 
-        $genres = $this->getDoctrine()
-        ->getRepository(Genre::class)
+        $pays = $this->getDoctrine()
+        ->getRepository(Country::class)
         ->findBy(
-            array('series'=> $genre->getId()),
+            array(),
             array('name' => 'ASC'),
         );
 
-    
-        return $this->render('series/genre.html.twig', [
-            'genres' => $genres,
+        return $this->render('series/liste_pays.html.twig', [
+            'pays' => $pays,
         ]);
     }
+
+    /**
+     * @Route("/pays/{id}", name="pays_serie")
+     */
+    public function pays_serie(Country $pays,Request $requete, PaginatorInterface $paginator) {
+
+        $donnees = $pays->getSeries();
+
+        $series=$series=$paginator->paginate(
+            $donnees,
+            $requete->query->getInt('page',1),
+            10
+        );
+        return $this->render('series/pays_serie.html.twig', [
+            'pays' => $pays,
+            'series' => $series,
+        ]);
+    }
+    /**
+     * @Route("/genre/{id}", name="genre_serie")
+     */
+    public function liste_genre(Genre $genre,Request $requete, PaginatorInterface $paginator) {
+
+        $donnees = $genre->getSeries();
+
+        $series=$series=$paginator->paginate(
+            $donnees,
+            $requete->query->getInt('page',1),
+            10
+        );
+        return $this->render('series/serie_genre.html.twig', [
+            'genres' => $genre,
+            'series' => $series,
+        ]);
+    }
+
     /**
      * @Route("/serie/{id}", name="saisons_serie")
      */
