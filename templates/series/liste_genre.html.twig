@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block nav_series %} active {% endblock %}
+
+{% block body %}
+<h1>Les séries</h1>
+<hr>
+<h4><a href="{{path('series')}}">Afficher toutes les series <a></h4>
+<h4><a href="">Afficher les series par pays<a></h4>
+
+<br>
+
+
+<ul>
+    {% for genre in genres %}
+        <li>
+          <h5><a href="">{{ genre.name }} </a></h5> 
+            <br>
+        </li>
+        <br>
+    {% else %}
+        <span>No records found</span>
+    {% endfor %}
+   
+</ul>
+
+{% endblock %}

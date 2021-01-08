@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Entity\Series;
 use App\Entity\Season;
 use App\Entity\Episode;
+use App\Entity\Genre;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,6 +39,7 @@ class SeriesController extends AbstractController
         ]);
     }
 
+    
     /**
      * @Route("/liste_series/{id}", name="poster_get")
      */
@@ -50,7 +52,40 @@ class SeriesController extends AbstractController
         return $rep;
     }
 
+    /**
+     * @Route("/liste_genre", name="genre")
+     */
+    public function serie_genre() {
 
+        $genres = $this->getDoctrine()
+        ->getRepository(Genre::class)
+        ->findBy(
+            array(),
+            array('name' => 'ASC'),
+        );
+
+        return $this->render('series/liste_genre.html.twig', [
+            'genres' => $genres,
+        ]);
+    }
+
+    /**
+     * @Route("/genre/{id}", name="genre_serie")
+     */
+    public function liste_genre(Genre $genre) {
+
+        $genres = $this->getDoctrine()
+        ->getRepository(Genre::class)
+        ->findBy(
+            array('series'=> $genre->getId()),
+            array('name' => 'ASC'),
+        );
+
+    
+        return $this->render('series/genre.html.twig', [
+            'genres' => $genres,
+        ]);
+    }
     /**
      * @Route("/serie/{id}", name="saisons_serie")
      */
