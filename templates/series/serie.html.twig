@@ -11,8 +11,13 @@
 <h1> Série : <a href="https://www.imdb.com/title/{{ serie.imdb }}/" target="blank_"> {{serie.title}} </a></h1>
 <hr>
 {% if app.user %}
+    {% if serie in app.user.series %}
+            <br>
+            <a class="btn btn-danger" href="{{ path('remove_serie', {'id': serie.id}) }}" role="button">Ne plus suivre </a>
+    {% else %}
             <br>
             <a class="btn btn-success" href="{{ path('suivre_serie', {'id': serie.id}) }}" role="button">Suivre cette série</a>
+    {% endif %}
 {% endif %}
 <br>
 <br>

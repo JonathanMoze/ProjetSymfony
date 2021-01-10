@@ -15,13 +15,24 @@
            <h3><a href="{{ path('saisons_serie', {'id': serie.id}) }}">{{ serie.title }} </a></h3>
             <br>
             <img src="{{ path('poster_get', {'id': serie.id}) }}">
+        {% if app.user %}
+            {% if serie in app.user.series %}
+            <br>
+            <a class="btn btn-danger" href="{{ path('remove_serie', {'id': serie.id}) }}" role="button">Ne plus suivre </a>
+        
+            {% endif %}
         </li>
         <br>
-    {% else %}
+        
+        {% else %}
+
         <span>No records found</span>
+        {% endif %}
     {% endfor %}
-    <div> {{knp_pagination_render(series) }}</div>
    
 
 </ul>
+
+    <div> {{knp_pagination_render(series) }}</div>
+
 {% endblock %}

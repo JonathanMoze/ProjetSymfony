@@ -47,7 +47,7 @@ class UserSpaceController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
         
-        return $this->redirectToRoute('series');
+        return $this->redirect($_SERVER['HTTP_REFERER']);
     }
 
     /**
@@ -63,6 +63,5 @@ class UserSpaceController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
         
-        return $this->redirectToRoute('series');
-    }
+        return $this->redirect($_SERVER['HTTP_REFERER']);    }
 }
