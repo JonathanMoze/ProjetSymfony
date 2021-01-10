@@ -5,8 +5,13 @@
 {% block body %}
 <h1>Les séries</h1>
 <hr>
+<<<<<<< HEAD
 <h4><a class="btn btn-primary" role="button"href="{{path('genre')}}">Afficher les series par genre</a></h4>
 <h4><a class="btn btn-primary" role="button"href="{{path('pays')}}">Afficher les series par pays</a></h4>
+=======
+<h4><a href="{{path('genre')}}">Afficher les series par genre</a></h4>
+<h4><a href="">Afficher les series par pays</a></h4>
+>>>>>>> userParty
 
 <div> {{knp_pagination_render(series) }}</div>
 
@@ -18,7 +23,11 @@
             <img src="{{ path('poster_get', {'id': serie.id}) }}">
             {% if app.user %}
             <br>
-            <a class="btn btn-success" href="{{ path('suivre_serie', {'id': serie.id}) }}" role="button">Suivre cette série</a>
+                {% if serie in app.user.series %}
+                     <a class="btn btn-danger" href="{{ path('remove_serie', {'id': serie.id}) }}" role="button">Ne plus suivre cette Série</a>
+                {% else %}
+                    <a class="btn btn-success" href="{{ path('suivre_serie', {'id': serie.id}) }}" role="button">Suivre cette série</a>
+                {% endif %}
             {% endif %}
         </li>
         <br>
