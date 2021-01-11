@@ -19,6 +19,14 @@
     {% for episode in episodes %}
         <li>
             <a href="https://www.imdb.com/title/{{ episode.imdb }}/" target="blank_"> <strong>Episode n° {{episode.number}}  : </strong>{{episode.title}} </a>
+            <br>
+            {% if app.user %}
+                {% if episode in app.user.episode %}
+                     <a class="btn btn-secondary" href="{{ path('nonvu_episode', {'id': episode.id}) }}" role="button">Je ne l'ai pas vu enfait</a>
+                {% else %}
+                    <a class="btn btn-primary" href="{{ path('vu_episode', {'id': episode.id}) }}" role="button">Je l'ai vu</a>
+                {% endif %}
+            {% endif %}
          </li>
          <br>
     {% else %}

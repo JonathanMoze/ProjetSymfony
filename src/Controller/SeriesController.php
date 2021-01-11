@@ -134,9 +134,23 @@ class SeriesController extends AbstractController
             array('number' => 'ASC'),
         );
 
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(Episode::class);
+
+        $episodes = array();
+        foreach($saisons as $saison ){
+            $episodes = array_merge($episodes, $repository->createQueryBuilder('e')
+            ->where("e.season = ".$saison->getId())
+            ->orderBy('e.number', 'ASC')
+            ->getQuery()
+            ->getResult());
+        }
+
+
         return $this->render('series/serie.html.twig', [
             'serie' => $serie,
             'saisons' => $saisons,
+            'episodes' => $episodes,
         ]);
     }
 

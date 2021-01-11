@@ -33,7 +33,30 @@ gyroscope; picture-in-picture" allowfullscreen></iframe>
 <ul>
     {% for saison in saisons %}
         <li>
-            <a href="{{ path('episode_saison',{'id': saison.id}) }}">Saison {{saison.number}}</a></li>
+            {% if app.user %}
+                {% set vuEpisode = false %}
+                {% for episode in app.user.episode %}
+                    {% if episode.season == saison %}
+                        {% set vuEpisode = true %}
+                    {% endif %}
+                {% endfor %}
+
+
+                <a href="{{ path('episode_saison',{'id': saison.id}) }}"><h5>Saison {{saison.number}}</h5></a>
+                {% if vuEpisode %}
+                <p>vous avez vu les episodes :</p>
+                <ul>
+                    {% for episode in app.user.episode %}
+                        {% if episode.season == saison %}
+                            <li>Episode {{episode.number}}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                <br>
+                {% endif %}
+            {% else %}
+                <a href="{{ path('episode_saison',{'id': saison.id}) }}"><h5>Saison {{saison.number}}</h5></a>
+            {% endif %}    
         </li>
 
     {% else %}

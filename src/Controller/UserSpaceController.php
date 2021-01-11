@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Episode;
 use App\Entity\Series;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,6 +20,9 @@ class UserSpaceController extends AbstractController
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
+        if($user == "anon."){
+            return $this->redirectToRoute('app_login');
+        }        
 
         $mesSeries = $user->getSeries()
         ;
@@ -40,6 +44,12 @@ class UserSpaceController extends AbstractController
     public function suivre_serie(Series $serie)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        if($user == "anon."){
+            return $this->redirectToRoute('app_login');
+        }        
+
+
         $user->addSeries($serie);
 
         
@@ -56,6 +66,12 @@ class UserSpaceController extends AbstractController
     public function remove_serie(Series $serie)
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        if($user == "anon."){
+            return $this->redirectToRoute('app_login');
+        }   
+
+
         $user->removeSeries($serie);
 
         
@@ -63,5 +79,54 @@ class UserSpaceController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
         
-        return $this->redirect($_SERVER['HTTP_REFERER']);    }
+        return $this->redirect($_SERVER['HTTP_REFERER']);    
+    }
+
+
+    /**
+     * @Route("/user/vu_episode/{id}", name="vu_episode")
+     */
+    public function vu_episode(Episode $episode)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        if($user == "anon."){
+            return $this->redirectToRoute('app_login');
+        }   
+
+
+        $user->addEpisode($episode);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+
+        return $this->redirect($_SERVER['HTTP_REFERER']);
+    }
+
+
+    /**
+     * @Route("/user/nonvu_episode/{id}", name="nonvu_episode")
+     */
+    public function nonvu_episode(Episode $episode)
+    {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+
+        if($user == "anon."){
+            return $this->redirectToRoute('app_login');
+        }   
+
+
+
+        $user->removeEpisode($episode);
+
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+        
+        return $this->redirect($_SERVER['HTTP_REFERER']);    
+    }
 }
