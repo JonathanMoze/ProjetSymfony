@@ -19,8 +19,22 @@
 
 <ul>
     {% for serie in series %}
+
+        {% set moyenne = 0 %}
+        {% set nbRatings = 0 %}
+        {% for rating in ratings %}
+            {% if rating.series == serie %}
+                {% set moyenne = moyenne + rating.value %}
+                {% set nbRatings = nbRatings + 1 %}
+            {% endif %}
+        {% endfor %}
+        {% if nbRatings != 0 %}
+            {% set moyenne = moyenne / nbRatings %}
+        {% endif %}
+        
+
         <li>
-           <h3><a href="{{ path('saisons_serie', {'id': serie.id}) }}">{{ serie.title }} </a></h3>
+            <h3 style="display: inline-block"><a href="{{ path('info_serie', {'id': serie.id}) }}">{{ serie.title }} </a> </h3>(note : {{moyenne}}/5)
             <br>
             <img src="{{ path('poster_get', {'id': serie.id}) }}">
             {% if app.user %}

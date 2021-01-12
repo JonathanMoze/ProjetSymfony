@@ -6,15 +6,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Series;
 use App\Entity\Season;
 use App\Entity\Episode;
+use App\Entity\Rating;
+use App\Form\RatingFormType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+
+
+
 class SerieController extends AbstractController
 {
+
     /**
-     * @Route("/serie/{id}", name="saisons_serie")
+     * @Route("/serie/{id}", name="info_serie")
      */
-    public function serie(Series $serie)
+    public function serie(Request $request, Series $serie)
     {
         $saisons = $this->getDoctrine()
         ->getRepository(Season::class)
@@ -35,11 +43,75 @@ class SerieController extends AbstractController
             ->getResult());
         }
 
+        $ratings = $this->getDoctrine()
+            ->getRepository(Rating::class)
+            ->findBy(
+                array('series' => $serie->getId()),
+                array('value' => 'ASC'),
+                );
+        
+        dump($ratings);
+
+
+
+
+        
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
+        if($user != "anon."){
+            
+            $rating = $this->getDoctrine()
+            ->getRepository(Rating::class)
+            ->findOneBy(
+                array('series' => $serie->getId(), 'user' => $user->getId()),
+            );
+
+            if( $rating == null){
+                $rating = new Rating();
+            }
+        }
+        else{
+            $rating = new Rating();
+        }
+             
+        
+
+
+        
+        
+
+        $form = $this->createForm(RatingFormType::class, $rating);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            
+            if(!$rating->getId()){
+                $rating->setUser($user);
+                $rating->setSeries($serie);
+                $rating->setDate(new \DateTime());
+
+                
+            }
+
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($rating);
+            $entityManager->flush();
+        }
+
+
+
+
+
 
         return $this->render('serie/serie.html.twig', [
             'serie' => $serie,
             'saisons' => $saisons,
             'episodes' => $episodes,
+            'ratings' => $ratings,
+            'formRating' => $form->createView(),
+            'editMode' => $rating->getId() !== null,
         ]);
     }
 

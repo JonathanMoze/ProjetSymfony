@@ -7,7 +7,7 @@
 
 {% block body %}
 
-<h1> Série : {{serie.title}} </h1>
+<h1> Série : <a href="{{ path('info_serie', {'id': serie.id}) }}">{{serie.title}}</a></h1>
 <hr>
 <br>
 <h2>Saison : {{saisons.number}}</h2>

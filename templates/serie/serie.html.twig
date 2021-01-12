@@ -67,6 +67,50 @@ gyroscope; picture-in-picture" allowfullscreen></iframe>
 <h3>Commentaires :</h3>
 <hr>
 
+{% if app.user %}
+
+    {% if editMode %}
+        <h5>Donnez votre avis !</h5>
+        <br>
+    {% endif %}
+
+
+    {% form_theme formRating 'bootstrap_4_horizontal_layout.html.twig' %}
+    {{ form_start(formRating) }}
+
+    {{ form_row(formRating.value)}}
+    {{ form_row(formRating.comment)}}
+
+    {% if editMode %}
+        <button type="submit" class="btn btn-secondary">Enregistrer</button>
+    {% else %}
+        <button type="submit" class="btn btn-success">Envoyer</button>
+    {% endif %}
+
+    {{ form_end(formRating) }}
+
+
+    <br>
+    <hr>
+
+{% endif %}
+
+<br>
+
+{% for rating in ratings %}
+    <div class="card border-primary mb-3" style="max-width: 60rem;">
+        <div class="card-header">Commentaire de {{ rating.user.name }} écrit le {{ rating.date|date("m/d/Y à h:m:s") }}</div>
+        <div class="card-body">
+            <h4 class="card-title">Note : {{ rating.value }}/5</h4>
+            <p class="card-text">
+                {{ rating.comment }}
+            </p>
+        </div>
+    </div>
+    <br>  
+{% endfor %}
+
+
 
 
 

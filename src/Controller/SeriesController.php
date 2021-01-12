@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Series;
 use App\Entity\Genre;
 use App\Entity\Country;
+use App\Entity\Rating;
 use App\Form\RechercheFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,8 +32,6 @@ class SeriesController extends AbstractController
             $formData = $form->getData();
         }
 
-        dump($formData);
-
 
         if($formData['Nom'] != ""){
             $rep = $this->getDoctrine()
@@ -56,6 +55,14 @@ class SeriesController extends AbstractController
         }
 
 
+        $ratings = $this->getDoctrine()
+            ->getRepository(Rating::class)
+            ->findBy(
+                array(),
+                array('value' => 'ASC'),
+                );
+
+
         
 
         $series=$paginator->paginate(
@@ -66,6 +73,7 @@ class SeriesController extends AbstractController
 
         return $this->render('series/liste_series.html.twig', [
             'formRecherche' => $form->createView(),
+            'ratings' => $ratings,
             'series' => $series,
         ]);
     }
