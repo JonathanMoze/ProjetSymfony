@@ -24,23 +24,24 @@
       <li class="nav-item {% block nav_messeries %}{% endblock %}">
         <a class="nav-link" href="{{path('mes_series')}}">Mes séries</a>
       </li>
-        <li class="nav-item {% block se_deconnecter %}{% endblock %}">
-          <a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
-        </li>
-      {% else %}
-        <li class="nav-item {% block se_connecter %}{% endblock %}">
-          <a class="nav-link" href="{{path('app_login')}}">Se connecter</a>
-        </li>
-        <li class="nav-item {% block s_enregistrer %}{% endblock %}">
-          <a class="nav-link" href="{{path('register')}}">S'enregistrer</a>
-        </li>
       {% endif %}
     </ul>
     <br>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-    </form>
+    <ul class="navbar-nav mr-right">
+    {% if app.user %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
+      </li>
+    {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('app_login')}}">Se connecter</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{path('register')}}">S'enregistrer</a>
+      </li>
+    {% endif %}
+    </ul>
+    <br>
   </div>
 </nav>
   <div style= " margin-left: 10%;

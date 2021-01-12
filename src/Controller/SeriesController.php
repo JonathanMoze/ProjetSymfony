@@ -8,6 +8,7 @@ use App\Entity\Season;
 use App\Entity\Episode;
 use App\Entity\Genre;
 use App\Entity\Country;
+use App\Form\RechercheFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,12 +23,43 @@ class SeriesController extends AbstractController
      */
     public function series(Request $requete, PaginatorInterface $paginator) {
 
-        $donnees = $this->getDoctrine()
-        ->getRepository(Series::class)
-        ->findBy(
-            array(),
-            array('title' => 'ASC'),
-        );
+        $formData = ['Nom' => null];
+
+        $form = $this->createForm(RechercheFormType::class, $formData);
+        
+        $form->handleRequest($requete);
+
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+        }
+
+        dump($formData);
+
+
+        if($formData['Nom'] != ""){
+            $rep = $this->getDoctrine()
+            ->getRepository(Series::class);
+
+            $donnees = $rep->createQueryBuilder('s')
+                ->where('s.title LIKE :title')
+                ->setParameter('title', '%'.$formData['Nom'].'%')
+                ->orderBy('s.title', 'ASC')
+                ->getQuery()
+                ->getResult();
+            
+        }
+        else{
+            $donnees = $this->getDoctrine()
+            ->getRepository(Series::class)
+            ->findBy(
+                array(),
+                array('title' => 'ASC'),
+            );
+        }
+
+
+        
 
         $series=$paginator->paginate(
             $donnees,
@@ -36,6 +68,7 @@ class SeriesController extends AbstractController
         );
 
         return $this->render('series/liste_series.html.twig', [
+            'formRecherche' => $form->createView(),
             'series' => $series,
         ]);
     }

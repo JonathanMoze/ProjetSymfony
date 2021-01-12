@@ -5,6 +5,13 @@
 {% block body %}
 <h1>Les séries</h1>
 <hr>
+
+<h4>Rechercher une série</h4>
+{% form_theme formRecherche 'bootstrap_4_horizontal_layout.html.twig' %}
+{{ form (formRecherche) }}
+
+
+<hr>
 <h4><a class="btn btn-primary" role="button"href="{{path('genre')}}">Afficher les series par genre</a></h4>
 <h4><a class="btn btn-primary" role="button"href="{{path('pays')}}">Afficher les series par pays</a></h4>
 
