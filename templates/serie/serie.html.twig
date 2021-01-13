@@ -8,7 +8,7 @@
 
 {% set yt = serie.youtubeTrailer|split('=') %}
 
-<h1> Série : <a href="https://www.imdb.com/title/{{ serie.imdb }}/" target="blank_"> {{serie.title}} </a></h1>
+<h1 style="display: inline-block"><a href="https://www.imdb.com/title/{{ serie.imdb }}/" target="blank_"> {{serie.title}} </a></h1><span> note: ({{note}}/5)</span>
 <hr>
 {% if app.user %}
     {% if serie in app.user.series %}
@@ -99,7 +99,7 @@ gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 {% for rating in ratings %}
     <div class="card border-primary mb-3" style="max-width: 60rem;">
-        <div class="card-header">Commentaire de {{ rating.user.name }} écrit le {{ rating.date|date("m/d/Y à h:m:s") }}</div>
+        <div class="card-header">Commentaire de {{ rating.user.name }} écrit le {{ rating.date|date("d/m/Y H:i:s", '+01:00 GMT')  }}</div>
         <div class="card-body">
             <h4 class="card-title">Note : {{ rating.value }}/5</h4>
             <p class="card-text">

@@ -49,12 +49,19 @@ class SerieController extends AbstractController
                 array('series' => $serie->getId()),
                 array('value' => 'ASC'),
                 );
-        
-        dump($ratings);
 
 
+        $rep = $this->getDoctrine()
+        ->getRepository(Rating::class);
 
+        $moyenne = $rep->createQueryBuilder('r')
+        ->select("avg(r.value) as note")
+        ->where("r.series = :id")
+        ->setParameter('id', $serie->getId())
+        ->getQuery()
+        ->getResult();
 
+        $note = number_format($moyenne[0]['note'], 1);
         
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -89,11 +96,11 @@ class SerieController extends AbstractController
             if(!$rating->getId()){
                 $rating->setUser($user);
                 $rating->setSeries($serie);
-                $rating->setDate(new \DateTime());
+                
 
                 
             }
-
+            $rating->setDate(new \DateTime('now'));
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($rating);
@@ -110,6 +117,7 @@ class SerieController extends AbstractController
             'saisons' => $saisons,
             'episodes' => $episodes,
             'ratings' => $ratings,
+            'note' => $note,
             'formRating' => $form->createView(),
             'editMode' => $rating->getId() !== null,
         ]);

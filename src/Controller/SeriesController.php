@@ -55,6 +55,28 @@ class SeriesController extends AbstractController
         }
 
 
+
+        $seriesNotes = array();
+
+        foreach($donnees as $serie){
+            $rep = $this->getDoctrine()
+            ->getRepository(Rating::class);
+
+            $moyenne = $rep->createQueryBuilder('r')
+            ->select("avg(r.value) as note")
+            ->where("r.series = :id")
+            ->setParameter('id', $serie->getId())
+            ->getQuery()
+            ->getResult();
+
+            $seriesNotes[] = array(
+                'serie' => $serie,
+                'note' => number_format($moyenne[0]['note'], 1),
+            );
+
+        }
+
+
         $ratings = $this->getDoctrine()
             ->getRepository(Rating::class)
             ->findBy(
@@ -66,7 +88,7 @@ class SeriesController extends AbstractController
         
 
         $series=$paginator->paginate(
-            $donnees,
+            $seriesNotes,
             $requete->query->getInt('page',1),
             10
         );
