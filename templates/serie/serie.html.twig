@@ -31,7 +31,7 @@ gyroscope; picture-in-picture" allowfullscreen></iframe>
 <h3>Les Saisons de  {{serie.title}} :</h3>
 
 <ul>
-    {% for saison in saisons %}
+    {% for saison in serie.seasons %}
         <li>
             {% if app.user %}
                 {% set vuEpisode = false %}
@@ -97,7 +97,7 @@ gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 <br>
 
-{% for rating in ratings %}
+{% for rating in serie.ratings %}
     <div class="card border-primary mb-3" style="max-width: 60rem;">
         <div class="card-header">Commentaire de {{ rating.user.name }} écrit le {{ rating.date|date("d/m/Y H:i:s", '+01:00 GMT')  }}</div>
         <div class="card-body">

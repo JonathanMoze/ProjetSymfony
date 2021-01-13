@@ -45,7 +45,7 @@ class Rating
     /**
      * @var \Series
      *
-     * @ORM\ManyToOne(targetEntity="Series")
+     * @ORM\ManyToOne(targetEntity="Series", inversedBy="ratings")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="series_id", referencedColumnName="id")
      * })

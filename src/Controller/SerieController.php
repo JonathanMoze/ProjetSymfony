@@ -5,11 +5,9 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Series;
 use App\Entity\Season;
-use App\Entity\Episode;
 use App\Entity\Rating;
 use App\Form\RatingFormType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -24,32 +22,7 @@ class SerieController extends AbstractController
      */
     public function serie(Request $request, Series $serie)
     {
-        $saisons = $this->getDoctrine()
-        ->getRepository(Season::class)
-        ->findBy(
-            array('series' => $serie->getId()),
-            array('number' => 'ASC'),
-        );
-
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Episode::class);
-
-        $episodes = array();
-        foreach($saisons as $saison ){
-            $episodes = array_merge($episodes, $repository->createQueryBuilder('e')
-            ->where("e.season = ".$saison->getId())
-            ->orderBy('e.number', 'ASC')
-            ->getQuery()
-            ->getResult());
-        }
-
-        $ratings = $this->getDoctrine()
-            ->getRepository(Rating::class)
-            ->findBy(
-                array('series' => $serie->getId()),
-                array('value' => 'ASC'),
-                );
-
+        
 
         $rep = $this->getDoctrine()
         ->getRepository(Rating::class);
@@ -62,6 +35,8 @@ class SerieController extends AbstractController
         ->getResult();
 
         $note = number_format($moyenne[0]['note'], 1);
+        
+
         
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -84,9 +59,6 @@ class SerieController extends AbstractController
         
 
 
-        
-        
-
         $form = $this->createForm(RatingFormType::class, $rating);
 
         $form->handleRequest($request);
@@ -108,15 +80,8 @@ class SerieController extends AbstractController
         }
 
 
-
-
-
-
         return $this->render('serie/serie.html.twig', [
             'serie' => $serie,
-            'saisons' => $saisons,
-            'episodes' => $episodes,
-            'ratings' => $ratings,
             'note' => $note,
             'formRating' => $form->createView(),
             'editMode' => $rating->getId() !== null,
@@ -124,24 +89,14 @@ class SerieController extends AbstractController
     }
 
 
-
     /**
      * @Route("/saison/{id}", name="episode_saison")
      */
     public function saison(Season $season )
     {
-        $episode = $this->getDoctrine()
-        ->getRepository(Episode::class)
-        ->findBy(
-            array('season' => $season->getId()),
-            array('number' => 'ASC'),
-        );
-        $serie = $season->getSeries();
 
         return $this->render('serie/saison.html.twig', [
-            'serie' => $serie,
-            'saisons' => $season,
-            'episodes' => $episode,
+            'saison' => $season,
         ]);
     }
 }

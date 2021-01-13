@@ -7,16 +7,16 @@
 
 {% block body %}
 
-<h1> Série : <a href="{{ path('info_serie', {'id': serie.id}) }}">{{serie.title}}</a></h1>
+<h1> Série : <a href="{{ path('info_serie', {'id': saison.series.id}) }}">{{saison.series.title}}</a></h1>
 <hr>
 <br>
-<h2>Saison : {{saisons.number}}</h2>
+<h2>Saison : {{saison.number}}</h2>
 <br>
 
 <h3>Les Episodes :</h3>
 <br>
 <ul>
-    {% for episode in episodes %}
+    {% for episode in saison.episodes %}
         <li>
             <a href="https://www.imdb.com/title/{{ episode.imdb }}/" target="blank_"> <strong>Episode n° {{episode.number}}  : </strong>{{episode.title}} </a>
             <br>

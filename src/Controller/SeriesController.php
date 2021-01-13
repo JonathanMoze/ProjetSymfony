@@ -76,17 +76,6 @@ class SeriesController extends AbstractController
 
         }
 
-
-        $ratings = $this->getDoctrine()
-            ->getRepository(Rating::class)
-            ->findBy(
-                array(),
-                array('value' => 'ASC'),
-                );
-
-
-        
-
         $series=$paginator->paginate(
             $seriesNotes,
             $requete->query->getInt('page',1),
@@ -95,7 +84,6 @@ class SeriesController extends AbstractController
 
         return $this->render('series/liste_series.html.twig', [
             'formRecherche' => $form->createView(),
-            'ratings' => $ratings,
             'series' => $series,
         ]);
     }

@@ -114,6 +114,23 @@ class Series
      */
     private $user;
 
+
+    /**
+     * @var \Seasons
+     *
+     * @ORM\OneToMany(targetEntity="Season", mappedBy="series")
+     */
+    private $seasons;
+
+
+    /**
+     * @var \Rating
+     *
+     * @ORM\OneToMany(targetEntity="Rating", mappedBy="series")
+
+     */
+    private $ratings;
+
     /**
      * Constructor
      */
@@ -123,6 +140,8 @@ class Series
         $this->country = new \Doctrine\Common\Collections\ArrayCollection();
         $this->genre = new \Doctrine\Common\Collections\ArrayCollection();
         $this->user = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->seasons = new ArrayCollection();
+        $this->ratings = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -341,6 +360,66 @@ class Series
     {
         if ($this->user->removeElement($user)) {
             $user->removeSeries($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Season[]
+     */
+    public function getSeasons(): Collection
+    {
+        return $this->seasons;
+    }
+
+    public function addSeason(Season $season): self
+    {
+        if (!$this->seasons->contains($season)) {
+            $this->seasons[] = $season;
+            $season->setSeries($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSeason(Season $season): self
+    {
+        if ($this->seasons->removeElement($season)) {
+            // set the owning side to null (unless already changed)
+            if ($season->getSeries() === $this) {
+                $season->setSeries(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Rating[]
+     */
+    public function getRatings(): Collection
+    {
+        return $this->ratings;
+    }
+
+    public function addRating(Rating $rating): self
+    {
+        if (!$this->ratings->contains($rating)) {
+            $this->ratings[] = $rating;
+            $rating->setSeries($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRating(Rating $rating): self
+    {
+        if ($this->ratings->removeElement($rating)) {
+            // set the owning side to null (unless already changed)
+            if ($rating->getSeries() === $this) {
+                $rating->setSeries(null);
+            }
         }
 
         return $this;
