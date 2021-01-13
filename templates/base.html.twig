@@ -13,6 +13,8 @@
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
 
+        
+
         {% block stylesheets %}
         {% endblock %}
 
@@ -22,6 +24,8 @@
         </style>
     </head>
     <body>
+
+
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand" href="{{path('home')}}">La Vidéothèque</a>
   
@@ -43,6 +47,10 @@
     <br>
     <ul class="navbar-nav mr-right">
     {% if app.user %}
+      {% if app.user.admin %}
+        <a class="nav-link" href="{{path('moderation')}}">Modération Commentaires</a>
+
+      {% endif %}
       <li class="nav-item">
         <a class="nav-link" href="{{path('app_logout')}}">Déconnexion</a>
       </li>
