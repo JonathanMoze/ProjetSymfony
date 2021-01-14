@@ -1,48 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block nav_series %} active {% endblock %}
+{% block nav_series %}
+	active
+{% endblock %}
 
 {% block body %}
-<h1>Les séries</h1>
-<hr style="color : white">
+	<h1>Les séries</h1>
+	<hr style="color : white">
 
-<h4>Rechercher une série</h4>
-{% form_theme formRecherche 'bootstrap_4_horizontal_layout.html.twig' %}
-{{ form (formRecherche) }}
-
-
-<hr>
-<h4><a class="btn btn-primary" role="button"href="{{path('genre')}}">Afficher les series par genre</a></h4>
-<h4><a class="btn btn-primary" role="button"href="{{path('pays')}}">Afficher les series par pays</a></h4>
-<h4><a class="btn btn-primary" role="button"href="{{path('series_pop')}}">Afficher les series par popularité</a></h4>
-
-<div> {{knp_pagination_render(series) }}</div>
-
-<ul>
-    {% for s in series %}
-        
-        <li>
-            <h3 style="display: inline-block"><a href="{{ path('info_serie', {'id': s.serie.id}) }}">{{ s.serie.title }} </a> </h3><span>(note : {{s.note}}/5)</span>
-            <br>
-            <img src="{{ path('poster_get', {'id': s.serie.id}) }}">
-            {% if app.user %}
-            <br>
-                {% if s.serie in app.user.series %}
-                     <a class="btn btn-danger" href="{{ path('remove_serie', {'id': s.serie.id}) }}" role="button">Ne plus suivre cette Série</a>
-                {% else %}
-                    <a class="btn btn-success" href="{{ path('suivre_serie', {'id': s.serie.id}) }}" role="button">Suivre cette série</a>
-                {% endif %}
-            {% endif %}
-        </li>
-        <br>
-    {% else %}
-        <span>No records found</span>
-    {% endfor %}
-    <div> {{knp_pagination_render(series) }}</div>
-   
-
-</ul>
+	<h4>Rechercher une série</h4>
+	{% form_theme formRecherche 'bootstrap_4_horizontal_layout.html.twig' %}
+	{{ form (formRecherche) }}
 
 
+		<hr>
+		<h4>
+			<a class="btn btn-primary" role="button" href="{{path('genre')}}">Afficher les series par genre</a>
+		</h4>
+		<h4>
+			<a class="btn btn-primary" role="button" href="{{path('pays')}}">Afficher les series par pays</a>
+		</h4>
+		<h4>
+			<a class="btn btn-primary" role="button" href="{{path('series_pop')}}">Afficher les series par popularité</a>
+		</h4>
 
-{% endblock %}
+		<div>
+			{{knp_pagination_render(series) }}</div>
+
+		<ul>
+			{% for s in series %}
+
+				<li>
+					<h3 style="display: inline-block">
+						<a href="{{ path('info_serie', {'id': s.serie.id}) }}">{{ s.serie.title }}
+						</a>
+					</h3>
+					<span>(note :
+						{{s.note}}/5)</span>
+					<br>
+					<img src="{{ path('poster_get', {'id': s.serie.id}) }}">
+					{% if app.user %}
+						<br>
+						{% if s.serie in app.user.series %}
+							<a class="btn btn-danger" href="{{ path('remove_serie', {'id': s.serie.id}) }}" role="button">Ne plus suivre cette Série</a>
+						{% else %}
+							<a class="btn btn-success" href="{{ path('suivre_serie', {'id': s.serie.id}) }}" role="button">Suivre cette série</a>
+						{% endif %}
+					{% endif %}
+				</li>
+				<br>
+			{% else %}
+				<span>No records found</span>
+			{% endfor %}
+			<div>
+				{{knp_pagination_render(series) }}</div>
+
+
+		</ul>
+
+
+	{% endblock %}

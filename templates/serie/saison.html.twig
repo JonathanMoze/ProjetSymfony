@@ -1,38 +1,49 @@
 {% extends 'base.html.twig' %}
 
 
-{% block nav_series %} active {% endblock %}
-
+{% block nav_series %}
+	active
+{% endblock %}
 
 
 {% block body %}
 
-<h1> Série : <a href="{{ path('info_serie', {'id': saison.series.id}) }}">{{saison.series.title}}</a></h1>
-<hr>
-<br>
-<h2>Saison : {{saison.number}}</h2>
-<br>
+	<h1>
+		Série :
+		<a href="{{ path('info_serie', {'id': saison.series.id}) }}">{{saison.series.title}}</a>
+	</h1>
+	<hr>
+	<br>
+	<h2>Saison :
+		{{saison.number}}</h2>
+	<br>
 
-<h3>Les Episodes :</h3>
-<br>
-<ul>
-    {% for episode in saison.episodes %}
-        <li>
-            <a href="https://www.imdb.com/title/{{ episode.imdb }}/" target="blank_"> <strong>Episode n° {{episode.number}}  : </strong>{{episode.title}} </a>
-            <br>
-            {% if app.user %}
-                {% if episode in app.user.episode %}
-                     <a class="btn btn-secondary" href="{{ path('nonvu_episode', {'id': episode.id}) }}" role="button">Je ne l'ai pas vu enfait</a>
-                {% else %}
-                    <a class="btn btn-primary" href="{{ path('vu_episode', {'id': episode.id}) }}" role="button">Je l'ai vu</a>
-                {% endif %}
-            {% endif %}
-         </li>
-         <br>
-    {% else %}
-        <span>No episodes found</span>
-    {% endfor %}
-</ul>
+	<h3>Les Episodes :</h3>
+	<br>
+	<ul>
+		{% for episode in saison.episodes %}
+			<li>
+				<a href="https://www.imdb.com/title/{{ episode.imdb }}/" target="blank_">
+					<strong>Episode n°
+						{{episode.number}}
+						:
+					</strong>
+					{{episode.title}}
+				</a>
+				<br>
+				{% if app.user %}
+					{% if episode in app.user.episode %}
+						<a class="btn btn-secondary" href="{{ path('nonvu_episode', {'id': episode.id}) }}" role="button">Je ne l'ai pas vu enfait</a>
+					{% else %}
+						<a class="btn btn-primary" href="{{ path('vu_episode', {'id': episode.id}) }}" role="button">Je l'ai vu</a>
+					{% endif %}
+				{% endif %}
+			</li>
+			<br>
+		{% else %}
+			<span>No episodes found</span>
+		{% endfor %}
+	</ul>
 
 
 {% endblock %}

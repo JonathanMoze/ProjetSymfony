@@ -1,27 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block nav_home %} active {% endblock %}
-
-{% block stylesheets %} 
+{% block nav_home %}
+	active
 {% endblock %}
 
+{% block stylesheets %}{% endblock %}
 
 
 {% block body %}
-<h1>Bienvenue {% if app.user %} {{app.user.name}} {% endif %} dans la Vidéothèque</h1>
+	<h2>Bienvenue
+		{% if app.user %}
+			{{app.user.name}}
+		{% endif %}
+		dans la Vidéothèque
+	</h2>
+	<hr>
 
-<hr>
+	<br>
 
-<br>
+	<div>
 
-<div>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-Placeat itaque expedita facilis vitae quibusdam id porro, animi 
-illum voluptates debitis vel numquam repellat ad modi dolores dolorem!
- Velit, nesciunt praesentium. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Praesentium repellendus laboriosam, accusamus quas iure impedit atque maiores facilis vero 
- harum ipsum laborum debitis possimus velit odit! Illo recusandae ad consequuntur.
- </p>
-</div>
+		<p>
+			Sur ce site vous pourrez voir une large sélection de série et obtenir toutes les informations relatives à vos séries.
+									Recherchez des nouvelles séries et regardez les séries populaires auprès de nos internautes.
+
+		</p>
+		{% if not app.user %}
+			<br>
+			<p>
+				<a href="{{ path('app_login') }}">Connectez-vous
+				</a>
+				pour :
+			</p>
+			<ul>
+
+				<li>Suivre vos séries préférées</li>
+				<li>Marquer l'avancée de vos séries</li>
+				<li>Noter et commenter des séries</li>
+
+			</ul>
+		{% else %}
+			<p>Aller dans
+				<a href="{{path('mes_series')}}">
+					mes séries
+				</a>
+				pour suivre vos séries favorites
+			</p>
+		{% endif %}
+
+
+	</div>
+
 {% endblock %}
-

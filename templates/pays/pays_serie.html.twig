@@ -1,27 +1,34 @@
 {% extends 'base.html.twig' %}
 
-{% block nav_series %} active {% endblock %}
+{% block nav_series %}
+	active
+{% endblock %}
 
 {% block body %}
-<h1>{{pays.name}}</h1>
-<hr>
-<div> {{knp_pagination_render(series) }}</div>
-<ul>
-    {% for serie in series %}
-        <li>
-         
-           <h3><a href="{{ path('info_serie', {'id': serie.id}) }}">{{ serie.title }} </a></h3>
-            <br>
-             <img src="{{ path('poster_get', {'id': serie.id}) }}">
-        </li>
-        {% if app.user %}
-            <br>
-            <a class="btn btn-success" href="{{ path('suivre_serie', {'id': serie.id}) }}" role="button">Suivre cette série</a>
-            {% endif %}
-        <br>
-    {% endfor %}
-</ul>
+	<h1>{{pays.name}}</h1>
+	<hr>
+	<div>
+		{{knp_pagination_render(series) }}</div>
+	<ul>
+		{% for serie in series %}
+			<li>
 
-<div> {{knp_pagination_render(series) }}</div>
+				<h3>
+					<a href="{{ path('info_serie', {'id': serie.id}) }}">{{ serie.title }}
+					</a>
+				</h3>
+				<br>
+				<img src="{{ path('poster_get', {'id': serie.id}) }}">
+			</li>
+			{% if app.user %}
+				<br>
+				<a class="btn btn-success" href="{{ path('suivre_serie', {'id': serie.id}) }}" role="button">Suivre cette série</a>
+			{% endif %}
+			<br>
+		{% endfor %}
+	</ul>
+
+	<div>
+		{{knp_pagination_render(series) }}</div>
 
 {% endblock %}

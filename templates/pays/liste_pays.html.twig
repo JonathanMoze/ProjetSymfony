@@ -1,25 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block nav_series %} active {% endblock %}
+{% block nav_series %}
+	active
+{% endblock %}
 
 {% block body %}
-<h1>Les séries</h1>
-<hr>
-<h4><a class="btn btn-primary" role="button" href="{{path('series')}}">Afficher toutes les series <a></h4>
-<h4><a class="btn btn-primary" role="button" href="{{path('genre')}}">Afficher les series par genre<a></h4>
-<h4><a class="btn btn-primary" role="button"href="{{path('series_pop')}}">Afficher les series par popularité</a></h4>
+	<h1>Les séries</h1>
+	<hr>
+	<h4>
+		<a class="btn btn-primary" role="button" href="{{path('series')}}">Afficher toutes les series
+			<a></h4>
+			<h4>
+				<a class="btn btn-primary" role="button" href="{{path('genre')}}">Afficher les series par genre<a></h4>
+					<h4>
+						<a class="btn btn-primary" role="button" href="{{path('series_pop')}}">Afficher les series par popularité</a>
+					</h4>
 
-<br>
+					<br>
 
 
-<ul>
-    {% for country in pays %}
-        <li>
-        <h3><a href="{{ path('pays_serie', {'id': country.id}) }}">{{ country.name }} </a></h3>        <br>
-        </li>
-        <br>
-    {% endfor %}
-   
-</ul>
+					<ul>
+						{% for country in pays %}
+							<li>
+								<h3>
+									<a href="{{ path('pays_serie', {'id': country.id}) }}">{{ country.name }}
+									</a>
+								</h3>
+								<br>
+							</li>
+							<br>
+						{% endfor %}
 
-{% endblock %}
+					</ul>
+
+				{% endblock %}

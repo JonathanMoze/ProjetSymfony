@@ -1,27 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block nav_series %} active {% endblock %}
+{% block nav_series %}
+	active
+{% endblock %}
 
 {% block body %}
-<h1>Les séries</h1>
-<hr>
-<h4><a class="btn btn-primary" role="button" href="{{path('series')}}">Afficher toutes les series <a></h4>
-<h4><a class="btn btn-primary" role="button" href="{{path('pays')}}">Afficher les series par pays<a></h4>
-<h4><a class="btn btn-primary" role="button"href="{{path('series_pop')}}">Afficher les series par popularité</a></h4>
+	<h1>Les séries</h1>
+	<hr>
+	<h4>
+		<a class="btn btn-primary" role="button" href="{{path('series')}}">Afficher toutes les series
+			<a></h4>
+			<h4>
+				<a class="btn btn-primary" role="button" href="{{path('pays')}}">Afficher les series par pays<a></h4>
+					<h4>
+						<a class="btn btn-primary" role="button" href="{{path('series_pop')}}">Afficher les series par popularité</a>
+					</h4>
 
-<br>
+					<br>
 
 
-<ul>
-    {% for genre in genres %}
-        <li>
-        <h3><a href="{{ path('genre_serie', {'id': genre.id}) }}">{{ genre.name }} </a></h3>            <br>
-        </li>
-        <br>
-    {% else %}
-        <span>No records found</span>
-    {% endfor %}
-   
-</ul>
+					<ul>
+						{% for genre in genres %}
+							<li>
+								<h3>
+									<a href="{{ path('genre_serie', {'id': genre.id}) }}">{{ genre.name }}
+									</a>
+								</h3>
+								<br>
+							</li>
+							<br>
+						{% else %}
+							<span>No records found</span>
+						{% endfor %}
 
-{% endblock %}
+					</ul>
+
+				{% endblock %}
